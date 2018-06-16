@@ -9,6 +9,7 @@ import json
 import pickle
 import datetime
 from blockClass import Block
+from blockchainWallet import generate_key_pair
 from blockchainUtilities import create_genesis_block, proof_of_work, consensus, verify_message, get_balance
 from Crypto.PublicKey import RSA
 from flask import Flask, request
@@ -27,9 +28,14 @@ except:
     print("Error: Unable to load node config file")
     exit()
 
-
-key_file = open(node_wallet_name+'_public_key.pem', 'rb')
-node_addr= RSA.importKey(key_file.read()).exportKey().decode("UTF-8")
+if mining == True:
+    try:
+        key_file = open(node_wallet_name+'_public_key.pem', 'rb')
+    except:
+        print("Node wallet not found, generating new wallet...")
+        generate_key_pair(node_wallet_name)
+        key_file = open(node_wallet_name+'_public_key.pem', 'rb')
+    node_addr= RSA.importKey(key_file.read()).exportKey().decode("UTF-8")
 
 
 blockchain = []
