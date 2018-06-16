@@ -83,11 +83,5 @@ def get_balance(wallet_name):
 if __name__ =='__main__':
     pass
 #send_funds("Other_Test_Wallet", "Test_Wallet", 100)
-#print(get_balance("Other_Test_Wallet"))
-#print(get_balance("Test_Wallet"))
-#send_funds("Test_Wallet", "Other_Test_Wallet", 0)
 
-
-
-#add values to create total
-#when spent, add transaction to Used transactions list
+    print(get_balance("Test_Wallet"))

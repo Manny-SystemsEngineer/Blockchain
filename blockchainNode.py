@@ -138,4 +138,4 @@ def store_blockchain():
         pickle.dump(new_blockchain, blockchain_file, pickle.HIGHEST_PROTOCOL)
 
 
-node.run(host=node_ip_address, port=int(node_port))
+node.run(host=node_ip_address, port=int(node_port), threaded=True)
