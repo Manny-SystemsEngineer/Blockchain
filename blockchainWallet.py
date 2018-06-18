@@ -6,6 +6,7 @@ Created on Thu Mar 15 19:38:15 2018
 @author: manny
 """
 import json
+import os
 import requests
 from blockClass import Block
 from blockchainUtilities import consensus
@@ -71,7 +72,7 @@ def get_balance(wallet_name):
     blocks = r.json()
     #create list of unspent transactions
     for block in blocks:
-        transactions = (literal_eval(block['data'])['transactions'])
+        transactions = literal_eval(block['data'])['transactions']
         if transactions != None:
             for transaction in transactions:
                     if transaction['from'] == public_key:
@@ -80,9 +81,27 @@ def get_balance(wallet_name):
                         total = total + float(transaction['amount'])
     return total
 
-if __name__ =='__main__':
-#send_funds("Other_Test_Wallet", "Test_Wallet", 100)
+def get_address_book(address_directory="./"):
+    address_book = []
+    for file in os.listdir(address_directory):
+        if file.endswith(".pem"):
+            if "public_key" in file:
+                address_book.append(file.split("_public_key.pem")[0])
+    print("--ADDRESS BOOK--")
+    for address in address_book:
+        print("{0} | {1} | {2}".format(address_book.index(address), address, get_balance(address)))
+    return address_book
 
-    print(get_balance("Test_Wallet"))
-    generate_key_pair("Grad_Wallet")
-    print(get_balance("Grad_Wallet"))
+
+
+
+
+if __name__ =='__main__':
+    #send_funds("Other_Test_Wallet", "Test_Wallet", 100)
+    address_book = get_address_book()
+    current_wallet = address_book[int(input("\nSelect a Wallet: ",))]
+    print("\rLogged in as: {0}".format(current_wallet))
+    address = address_book[int(input("Address to send to: ",))]
+    amount = int(input("\rAmount to transfer to {0}: ".format(address),))
+    send_funds(current_wallet, address, amount)
+    print("\n")

@@ -57,6 +57,7 @@ if blockchain == []:
     blockchain = [create_genesis_block()]
 
 tmp_blockchain = blockchain
+this_nodes_txions = []
 
 
 @node.route('/txion', methods=['POST'])
@@ -68,27 +69,18 @@ def transaction():
         if new_txion['amount'] > get_balance(RSA.importKey(new_txion['from'].encode("UTF-8"))):
             return "Insufficient funds to carry out transaction!\n", 403
         else:
-        #     verified = True
-            #try:
-            #    verified = verify_message(new_txion['hashed_message'], new_txion['signature'], RSA.importKey(new_txion['from'].encode("UTF-8")))
-            #except (e):
-            #    print(e)
-            if verified != None:
-                this_nodes_txions.append(new_txion)
-                print("---New Transaction")
-                print("FROM: {0}".format(new_txion['from']))
-                print("TO: {0}".format(new_txion['to']))
-                print("AMOUNT: #{0}".format(new_txion['amount']))
-                print("VERIFIED: {0}".format(verified))
-                return "Transaction submission successful!\n"
-            else:
-                return "Transaction not verified\n", 403
+            this_nodes_txions.append(new_txion)
+            print("---New Transaction")
+            print("FROM: {0}".format(new_txion['from']))
+            print("TO: {0}".format(new_txion['to']))
+            print("AMOUNT: #{0}".format(new_txion['amount']))
+            #print("VERIFIED: {0}".format(verified))
+            return "Transaction submission successful!\n"
 
 
 @node.route('/mine', methods=['GET'])
 def mine():
     if mining:
-        this_nodes_txions = []
         new_blockchain = consensus(peer_nodes, blockchain)
         last_block = new_blockchain[len(new_blockchain) - 1]
         last_proof = last_block.data['proof-of-work']

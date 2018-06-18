@@ -13,7 +13,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Signature import pkcs1_15
 from Crypto.Hash import SHA256
 from blockClass import Block
-
+from ast import literal_eval
 
 
 def create_genesis_block():
@@ -90,7 +90,7 @@ def get_balance(wallet_name):
     blocks = r.json()
     #create list of unspent transactions
     for block in blocks:
-        transactions = (literal_eval(block['data'])['transactions'])
+        transactions = literal_eval(block['data'])['transactions']
         if transactions != None:
             for transaction in transactions:
                     if transaction['from'] == public_key:
