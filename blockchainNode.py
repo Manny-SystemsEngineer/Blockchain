@@ -24,14 +24,14 @@ try:
     peer_nodes = []
     for peer_node in config['peer_nodes']:
         peer_nodes.append(peer_node)
-except:
+except Exception:
     print("Error: Unable to load node config file")
     exit()
 
 if mining:
     try:
         key_file = open(node_wallet_name+'_public_key.pem', 'rb')
-    except:
+    except Exception:
         print("Node wallet not found, generating new wallet...")
         generate_key_pair(node_wallet_name)
         key_file = open(node_wallet_name+'_public_key.pem', 'rb')
@@ -42,7 +42,7 @@ blockchain = []
 if blockchain == []:
     try:
         blockchain = consensus(peer_nodes, blockchain)
-    except:
+    except Exception:
         print("Can't connect to peer nodes")
 if blockchain == []:
     print("No peer nodes found")
@@ -50,7 +50,7 @@ if blockchain == []:
         with open('blockchain.pkl', 'rb') as blockchain_file:
             blockchain = pickle.load(blockchain_file)
         print("I'm pickle Chain! - blockchain initialised from local pkl file")
-    except:
+    except Exception:
         print("No local blockchain found")
 if blockchain == []:
     print("Generating local blockchain...")
