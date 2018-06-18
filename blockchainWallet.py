@@ -44,7 +44,7 @@ def send_funds(wallet_name, recevier_wallet_name, amount, node="http://localhost
         print("Insufficient funds available for transfer")
     else:
         hashed_message, signature = sign_message(str(amount), wallet_name)
-        #recevier_key_file = key_file = open(recevier_wallet_name+'_public_key.pem', 'rb')
+        key_file = open(recevier_wallet_name+'_public_key.pem', 'rb')
         recevier_key = RSA.importKey(key_file.read())
         transaction = {"from": public_key.exportKey().decode("UTF-8"),
                        "to": recevier_key.exportKey().decode("UTF-8"),
