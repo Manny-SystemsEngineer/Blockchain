@@ -16,7 +16,7 @@ from ast import literal_eval
 
 
 def generate_key_pair(wallet_name):
-    key = RSA.generate(1024)
+    key = RSA.generate(2048)
     #export private key
     private_key = key.exportKey('PEM')
     file_out_private = open(wallet_name+'_private_key.pem', 'wb')
@@ -44,7 +44,7 @@ def send_funds(wallet_name, recevier_wallet_name, amount, node="http://localhost
         print("Insufficient funds available for transfer")
     else:
         hashed_message, signature = sign_message(str(amount), wallet_name)
-        recevier_key_file = key_file = open(recevier_wallet_name+'_public_key.pem', 'rb')
+        #recevier_key_file = key_file = open(recevier_wallet_name+'_public_key.pem', 'rb')
         recevier_key = RSA.importKey(key_file.read())
         transaction = {"from": public_key.exportKey().decode("UTF-8"),
                        "to": recevier_key.exportKey().decode("UTF-8"),
@@ -55,13 +55,13 @@ def send_funds(wallet_name, recevier_wallet_name, amount, node="http://localhost
         r = requests.post(address + "/txion", json=transaction)
         if(r.status_code == 200):
             print("Transaction successful")
-            mine_request = requests.get(address + "/mine")
+            requests.get(address + "/mine")
         else:
             print(r)
 
 #curl get_blocks to see all transactions
 def get_balance(wallet_name):
-    if type(wallet_name) == str:
+    if isinstance(wallet_name, str):
         key_file = open(wallet_name+'_public_key.pem', 'rb')
         public_key = RSA.importKey(key_file.read()).exportKey().decode("UTF-8")
     else:
@@ -81,7 +81,8 @@ def get_balance(wallet_name):
     return total
 
 if __name__ =='__main__':
-    pass
 #send_funds("Other_Test_Wallet", "Test_Wallet", 100)
 
     print(get_balance("Test_Wallet"))
+    generate_key_pair("Grad_Wallet")
+    print(get_balance("Grad_Wallet"))

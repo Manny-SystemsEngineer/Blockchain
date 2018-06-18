@@ -77,7 +77,7 @@ def verify_message(hashed_message, signature, wallet_name):
         return False
 
 def get_balance(wallet_name):
-    if type(wallet_name) == str:
+    if isinstance(wallet_name, str):
         key_file = open(wallet_name+'_public_key.pem', 'rb')
         public_key = RSA.importKey(key_file.read()).exportKey().decode("UTF-8")
     else:

@@ -28,7 +28,7 @@ except:
     print("Error: Unable to load node config file")
     exit()
 
-if mining == True:
+if mining:
     try:
         key_file = open(node_wallet_name+'_public_key.pem', 'rb')
     except:
@@ -87,7 +87,7 @@ def transaction():
 
 @node.route('/mine', methods=['GET'])
 def mine():
-    if mining == True:
+    if mining:
         this_nodes_txions = []
         new_blockchain = consensus(peer_nodes, blockchain)
         last_block = new_blockchain[len(new_blockchain) - 1]
