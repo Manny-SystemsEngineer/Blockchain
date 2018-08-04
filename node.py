@@ -9,7 +9,7 @@ import json
 import pickle
 import datetime
 from blockClass import Block
-from blockchainWallet import generate_key_pair
+from wallet import generate_key_pair
 from blockchainUtilities import create_genesis_block, proof_of_work, consensus, verify_message, get_balance
 from Crypto.PublicKey import RSA
 from flask import Flask, request
