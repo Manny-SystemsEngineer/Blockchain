@@ -1,6 +1,5 @@
 import unittest
 import sys
-sys.path.append("..")
 from blockClass import Block
 
 class blockClassTest(unittest.TestCase):
