@@ -99,15 +99,3 @@ def get_balance(wallet_name):
                         total = total + float(transaction['amount'])
     return total
 
-#blockchain = [create_genesis_block()]
-#previous_block = blockchain[0]
-#
-#num_of_new_blocks = 10
-#
-# for i in range(0, num_of_new_blocks):
-#    new_block = next_block(previous_block)
-#    blockchain.append(new_block)
-#    previous_block = new_block
-#
-#    print("Block #{0} has been added to the blockchain!".format(new_block.index))
-#    print("Hash: {0}\n".format(new_block.hash))
