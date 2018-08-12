@@ -2,7 +2,7 @@
   "node_settings":
     {
       "node_ip_address": "0.0.0.0",
-      "node_port": "5001",
+      "node_port": "5000",
       "node_wallet_name": "Node_Wallet",
       "mining_enabled": true
     },
