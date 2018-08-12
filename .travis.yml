@@ -8,4 +8,4 @@ install:
 # command to run tests
 script:
   - cd UnitTests
-  - python *
+  - python -m unttest discover
